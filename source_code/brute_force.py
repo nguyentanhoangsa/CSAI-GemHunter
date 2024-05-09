@@ -40,27 +40,22 @@ def solve_map(board,rows,cols):
         return
 
     while True:
-        flag = False 
-        non_zero_count = 0 
+        max_count = 0 
 
         for row in range(rows):
             for col in range(cols):
                 if board[row][col] == '_':
                     count = sum_adjacent_traps(board, row, col, rows, cols)
-                    if count > non_zero_count:
-                        non_zero_count = count
+                    if count > max_count:
+                        max_count = count
                         max_row = row
                         max_col = col
 
-        if non_zero_count == 0:
+        if max_count == 0:
             break
         
         board[max_row][max_col] = 'T'
         decrement_adjacent_traps(board, max_row, max_col, rows, cols) 
-        flag = True
-
-        if not flag:
-            break
     
     for row in range(rows):
         for col in range(cols):
@@ -78,7 +73,9 @@ def solve_map(board,rows,cols):
         for col in range(cols):
             if col != cols-1:
                 result[row][col]= result[row][col]+','
-
+    if not check:
+        return check,None
+    
     return check, result
 
 #Đếm số trap xung quanh ô [row][cow]
