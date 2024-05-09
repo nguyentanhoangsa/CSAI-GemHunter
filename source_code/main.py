@@ -1,5 +1,6 @@
 import os
 from brute_force import* 
+from solveCNF_without_library import *
 
 def main():
     path_input_folder = 'testcases/input'
@@ -11,9 +12,18 @@ def main():
     for i in range(num_of_file(path_input_folder)):
         path_input_files.append(f"{path_input_folder}/input{i}.txt")
         path_output_files.append(f"{path_output_folder}/output{i}.txt")
-
+    print("--------MENU----------------")
+    print("1.Giải CNF sử dụng thư viện")
+    print("2.Giải CNF mà không sử dụng thư viện")
+    print("3.Sử dụng thuật toán Brute-force")
+    print("4.Sử dụng thuật toán Backtracking")
+    choose = int(input("Lựa chọn thuật toán mà bạn muốn làm: "))
+    while choose <1 or choose >4:
+        choose = int(input("Chọn sai, mời chọn lại: "))
+    
     for i in range(num_of_file(path_input_folder)):
-        write_output_file(path_input_files[i], path_output_files[i])  
+        write_output_file(path_input_files[i], path_output_files[i],choose)  
+        print("Xong",i)
 
 
 def num_of_file(path_folder):
@@ -43,12 +53,22 @@ def read_input_file(path_input_file):
         print(f"Không thể đọc file: {str(e)}")
         return None, None, None
 
-def write_output_file(path_input_file,path_output_file):
-    board = read_input_file(path_input_file)
-    rows = len(board)
-    cols = len(board[0])
-    #Brute-force algorithm
-    check, result = solve_map(board,rows,cols)
+def write_output_file(path_input_file,path_output_file,choose):
+    puzzle = read_input_file(path_input_file)
+    if choose==1:
+        print("Dùng thư viện")
+    elif choose==2:
+        #Solve CNF without library
+        check,result=doDPLL(puzzle)
+    elif choose==3:
+        #Brute-force algorithm
+        rows = len(puzzle)
+        cols = len(puzzle[0])
+        check, result = solve_map(puzzle,rows,cols)
+    elif choose==4:
+        print("backtracking")
+
+
     with open(path_output_file, 'w') as f:
         if check:
             for row in result:

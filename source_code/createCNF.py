@@ -2,32 +2,14 @@ import itertools
 # from pysat.formula import CNF
 # from pysat.solvers import Solver
 
-def main():
-    puzzle = [
-        [2, "_", "_",1, "_"],
-        ["_", 5,4,2,"_"],
-        [ 3,"_","_", 2,1],
-        [3,"_",6,"_",1],
-        [2,"_","_",2,1]
-    ]
-    puzzle=[
-            [2,"_",3,"_",2,2,"_",2,1],
-            [2,"_",4,2,"_","_",5,"_","_"],
-            [1,2,"_",1,2,"_","_","_",2],
-            [1,"_",2,"_",1,"_",2,"_",1],
-            [1,"_",2,1,"_",1,1,"_",0],
-            [2,2,2,"_",2,"_","_","_","_"],
-            ["_",3,2,"_",3,2,2,1,"_"],
-            ["_",3,"_",3,"_","_",1,"_",1],
-            [1,2,2,"_","_",1,"_",1,"_"]
-    ]
+def createCNFs(puzzle):
     m = len(puzzle[0])
     clauses = []
     for i in range(len(puzzle)):
         for j in range(len(puzzle[i])):
             if puzzle[i][j] != "_":
                 clauses += pointCNF(puzzle, i, j)
-    print(clauses)           
+    return clauses           
     # cnf = CNF(from_clauses=clauses)
     # with Solver(bootstrap_with=cnf) as solver:
     #     if solver.solve():
@@ -67,6 +49,3 @@ def pointCNF(p, r, c): #puzzle, row, column are considered
             i[j] = -i[j]
             
     return cnf
-
-if __name__ == "__main__":
-    main()
