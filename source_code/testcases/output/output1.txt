@@ -1,20 +1,9 @@
-G 1 2 T 1 G _ G 1 2 T 1 1 1 1 G G G G _
-G 2 T 3 1 G G G 1 T 2 1 1 T 2 2 1 1 G _
-G 2 T 2 G G 1 1 2 1 1 G 1 2 T 2 T 1 G _
-G 1 1 1 G G 1 T 1 G G G G 1 1 2 1 1 G _
-G G G G G G 1 1 1 G _ _ G 1 2 2 1 G G _
-_ _ _ _ _ G G G G G _ G G 1 T T 1 G _ _
-_ _ _ G G G 1 1 1 G G G 1 2 3 2 1 G _ _
-_ G G G 1 1 2 T 2 1 G G 1 T 2 1 1 G _ _
-G G 1 1 2 T 3 4 T 2 G G 1 2 3 T 1 G _ _
-1 1 1 T 2 1 2 T T 2 G G 1 2 T 2 1 G _ _
-T 1 1 1 1 G 1 2 3 3 2 1 2 T 3 1 G G _ _
-1 1 1 1 2 1 1 G 1 T T 1 2 T 3 1 1 G _ _
-G G 1 T 2 T 1 1 2 3 2 1 1 1 2 T 1 G _ _
-G G 1 1 2 1 1 2 T 2 G G G G 1 1 1 G _ _
-1 1 1 G G G G 2 T 2 G G G G 1 1 1 G G G
-1 T 1 G _ _ G 1 1 2 1 1 G 1 2 T 2 2 2 1
-1 1 1 G G G G G G 2 T 2 G 1 T 2 2 T T 1
-G G 1 1 1 G G G G 2 T 2 G 1 1 1 1 2 2 1
-_ G 1 T 2 1 1 G G 1 1 1 G G 1 1 1 G G G
-_ G 1 1 2 T 1 G G G G G G G 1 T 1 G _ _
+2 T 3 T 2 2 T 2 1
+2 T 4 2 G T 5 T G
+1 2 T 1 2 T G T 2
+1 G 2 G 1 G 2 G 1
+1 T 2 1 G 1 1 G 0
+2 2 2 T 2 T G G G
+T 3 2 G 3 2 2 1 G
+T 3 T 3 T G 1 T 1
+1 2 2 T G 1 G 1 G

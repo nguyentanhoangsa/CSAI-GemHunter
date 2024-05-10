@@ -23,7 +23,6 @@ def main():
     
     for i in range(num_of_file(path_input_folder)):
         write_output_file(path_input_files[i], path_output_files[i],choose)  
-        print("Xong",i)
 
 
 def num_of_file(path_folder):

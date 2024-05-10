@@ -106,12 +106,17 @@ def doDPLL(puzzle_origin):
     result=[]
     #Nếu đúng thì chuyển sang mảng hai chiều
     if(check):
+        #Đối với các trường hợp còn "_" ở trong thì điền toàn Gem
+        for i in range(len(listNewPuzzle)):
+            if listNewPuzzle[i]=="_":
+                listNewPuzzle[i]="G"
         row=[]
         for i in range(len(listNewPuzzle)):
             row.append(listNewPuzzle[i])
             if len(row)==len(puzzle[0]):
                 result.append(row)
                 row=[]
+        
         return check,result
     
     return check,None
