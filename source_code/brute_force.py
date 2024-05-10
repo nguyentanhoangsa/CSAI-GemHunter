@@ -1,108 +1,82 @@
 import os
+from createCNF import *
+from itertools import product
 
-#Tổng hệ số của các ô trong vùng lân cận của ô [row][col]
-def sum_adjacent_coefficient(board, row, col, rows, cols): 
-    sum = 0
-    for row_relative_pos in [-1, 0, 1]:
-        for col_relative_pos in [-1, 0, 1]:
-            if row_relative_pos == 0 and col_relative_pos == 0: 
-                continue
-            row_absolute_pos = row + row_relative_pos
-            col_absolute_pos = col + col_relative_pos
+def read_CNF(puzzle):
+    puzzle=list(map(lambda row: [int(i) if i.isdigit() else i for i in row], puzzle))
+    cnfs= createCNFs(puzzle)
 
-            if 0 <= row_absolute_pos < rows and 0 <= col_absolute_pos < cols and board[row_absolute_pos][col_absolute_pos].isdigit():
-                if board[row_absolute_pos][col_absolute_pos] == '0':
-                    return 0
-                else:
-                    sum += int(board[row_absolute_pos][col_absolute_pos])
-    return sum
+    return cnfs
 
-#Giảm hệ số của các ô trong vùng lân cận của ô [row][col]
-def decrement_adjacent_coefficient(board, row, col, rows, cols):  
-    for row_relative_pos in [-1, 0, 1]:
-        for col_relative_pos in [-1, 0, 1]:
-            if row_relative_pos == 0 and col_relative_pos == 0: 
-                continue
-            row_absolute_pos = row + row_relative_pos
-            col_absolute_pos = col + col_relative_pos
-            if 0 <= row_absolute_pos < rows and 0 <= col_absolute_pos < cols and board[row_absolute_pos][col_absolute_pos].isdigit() and int(board[row_absolute_pos][col_absolute_pos]) > 0:
-                board[row_absolute_pos][col_absolute_pos] = str(int(board[row_absolute_pos][col_absolute_pos]) - 1)
+def puzzle_1d(puzzle):
+    result = []
+    for row in puzzle:
+        result.extend(row)
 
-def brute_force(board,rows,cols):
+    result = ['#'] + result
+    return result
+
+def replace_underscore(puzzle_1d):
+    indices = [i for i, x in enumerate(puzzle_1d) if x == '_']
+    combinations = product(['T', 'G'], repeat=len(indices))
+    result = []
+    for comb in combinations:
+        new_arr = puzzle_1d.copy()
+        for i, index in enumerate(indices):
+            new_arr[index] = comb[i]
+        result.append(new_arr)
+    return result
+
+def brute_force(puzzle,row,col):
     result =[]
-    for row in range(rows):
-        row_result =[]
-        for col in range(cols):
-            row_result.append(board[row][col])
-        result.append(row_result)
+    check = False
+    result_1d =[]
 
-    if rows is None:
-        return
-
-    while True:
-        max_count = 0 
-
-        for row in range(rows):
-            for col in range(cols):
-                if board[row][col] == '_':
-                    count = sum_adjacent_coefficient(board, row, col, rows, cols)
-                    if count > max_count:
-                        max_count = count
-                        max_row = row
-                        max_col = col
-
-        if max_count == 0:
-            break
-        
-        board[max_row][max_col] = 'T'
-        decrement_adjacent_coefficient(board, max_row, max_col, rows, cols) 
+    cnfs = read_CNF(puzzle)
     
-    for row in range(rows):
-        for col in range(cols):
-            if board[row][col] == '_':
-                board[row][col] = 'G'
+    new_puzzle = puzzle_1d(puzzle)
+    all_cases = replace_underscore(new_puzzle)
+    for item in all_cases:
+        new_cnfs = []
+        for cnf in cnfs:
+            new_cnf = []
+            for i in cnf:
+                if (i >0):
+                    new_cnf.append(item[i])
+                else:
+                    if item[abs(i)] =='T':
+                        new_cnf.append('G')
+                    else:
+                        new_cnf.append('T')
+            new_cnfs.append(new_cnf)
+        
+        flag = True
+        for cnf in new_cnfs:
+            if 'T' in cnf:
+                continue
+            else:
+                flag = False
+                break
+        
+    
+        if flag:
+            check = True
+            result_1d = item.copy()
+            result_1d.pop(0)
+            break
 
-    for row in range(rows):
-        for col in range(cols):
-            if result[row][col] == '_':
-                result[row][col] = board[row][col]
-
-    check = check_traps(result, rows, cols)
-
-    for row in range(rows):
-        for col in range(cols):
-            if col != cols-1:
-                result[row][col]= result[row][col]+','
     if not check:
         return check,None
     
-    return check, result
-
-#Đếm số trap xung quanh ô [row][cow]
-def count_traps(result, row, col, rows, cols): 
-    count = 0
-    for row_relative_pos in [-1, 0, 1]:
-        for col_relative_pos in [-1, 0, 1]:
-            if row_relative_pos == 0 and col_relative_pos == 0: 
-                continue
-            row_absolute_pos = row + row_relative_pos
-            col_absolute_pos = col + col_relative_pos
-
-            if 0 <= row_absolute_pos < rows and 0 <= col_absolute_pos < cols and result[row_absolute_pos][col_absolute_pos] == 'T':
-                count += 1
-    return count
-
-# Kiểm tra số lượng trap có đúng với số biểu diễn ở ô [row][col]
-def check_traps(result, rows, cols): 
-    check = True
-    flag = True
-    for row in range(rows):
-        for col in range(cols):
-            if result[row][col].isdigit() and count_traps(result, row, col, rows, cols) != int(result[row][col]) :
-                check = False
-                flag = False
+    for i in range(row):
+        rows = []
+        for j in range(col):
+            index = i * col + j
+            if index < len(result_1d):
+                rows.append(result_1d[index])
+            else:
                 break
-            
-        if not flag:
-            break    
-    return check    
+        result.append(rows)
+
+    return check,result
+
