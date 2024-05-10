@@ -1,6 +1,4 @@
 import itertools
-# from pysat.formula import CNF
-# from pysat.solvers import Solver
 
 def createCNFs(puzzle):
     m = len(puzzle[0])
@@ -10,17 +8,6 @@ def createCNFs(puzzle):
             if puzzle[i][j] != "_":
                 clauses += pointCNF(puzzle, i, j)
     return clauses           
-    # cnf = CNF(from_clauses=clauses)
-    # with Solver(bootstrap_with=cnf) as solver:
-    #     if solver.solve():
-    #         result = solver.get_model()
-    # result = [result[i] + (- 1 if result[i] > 0 else 1)  for i in range(1, len(result))]
-    # print(result)
-"""
-    for i in result:
-        if i > 0:
-   """         
-    
 
 def pointCNF(p, r, c): #puzzle, row, column are considered
     n = len(p) #number of rows
@@ -32,20 +19,27 @@ def pointCNF(p, r, c): #puzzle, row, column are considered
                atomic.append(m*i + j + 1) #add index of p[i][j] in row-major order
 
     cnf = []
+    n = len(atomic)
 
-    for i in range(len(atomic)+1):
-        if i != p[r][c]:
-            cnf += list(itertools.combinations(atomic, i))  
+    if p[r][c] == n:
+        cnf = [[i] for i in atomic]
+    elif p[r][c] == 0:
+        cnf = [[-i] for i in atomic]
+    else:
+        for i in range(n + 1):
+            if i != p[r][c]:
+                cnf += list(itertools.combinations(atomic, i))  
 
-    for i in range(len(cnf)):
-        cnf[i] = [*cnf[i]]
+        for i in range(len(cnf)):
+            cnf[i] = [*cnf[i]]
 
-    for i in atomic:
-        for j in cnf:
-            if i not in j:
-                j.append(-i)
-    for i in cnf:
-        for j in range(len(i)):
-            i[j] = -i[j]
+        for i in atomic:
+            for j in cnf:
+                if i not in j:
+                    j.append(-i)
+                    
+        for i in cnf:
+            for j in range(len(i)):
+                i[j] = -i[j]
             
     return cnf
