@@ -1,7 +1,7 @@
 import os
 from brute_force import* 
 from solveCNF_without_library import *
-from solveByPysat import *
+from solve_by_pysat import *
 
 def main():
     path_input_folder = 'testcases/input'
@@ -57,7 +57,7 @@ def write_output_file(path_input_file,path_output_file,choose):
     puzzle = read_input_file(path_input_file)
     if choose==1:
         #Solve CNF by pysat
-        check, result = solveByPysat(puzzle)
+        check, result = solve_by_pysat(puzzle)
     elif choose==2:
         #Solve CNF without library
         check,result=doDPLL(puzzle)
