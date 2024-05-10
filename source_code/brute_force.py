@@ -1,7 +1,7 @@
 import os
 
 #Tổng hệ số của các ô trong vùng lân cận của ô [row][col]
-def sum_adjacent_traps(board, row, col, rows, cols): 
+def sum_adjacent_coefficient(board, row, col, rows, cols): 
     sum = 0
     for row_relative_pos in [-1, 0, 1]:
         for col_relative_pos in [-1, 0, 1]:
@@ -18,7 +18,7 @@ def sum_adjacent_traps(board, row, col, rows, cols):
     return sum
 
 #Giảm hệ số của các ô trong vùng lân cận của ô [row][col]
-def decrement_adjacent_traps(board, row, col, rows, cols):  
+def decrement_adjacent_coefficient(board, row, col, rows, cols):  
     for row_relative_pos in [-1, 0, 1]:
         for col_relative_pos in [-1, 0, 1]:
             if row_relative_pos == 0 and col_relative_pos == 0: 
@@ -28,7 +28,7 @@ def decrement_adjacent_traps(board, row, col, rows, cols):
             if 0 <= row_absolute_pos < rows and 0 <= col_absolute_pos < cols and board[row_absolute_pos][col_absolute_pos].isdigit() and int(board[row_absolute_pos][col_absolute_pos]) > 0:
                 board[row_absolute_pos][col_absolute_pos] = str(int(board[row_absolute_pos][col_absolute_pos]) - 1)
 
-def solve_map(board,rows,cols):
+def brute_force(board,rows,cols):
     result =[]
     for row in range(rows):
         row_result =[]
@@ -45,7 +45,7 @@ def solve_map(board,rows,cols):
         for row in range(rows):
             for col in range(cols):
                 if board[row][col] == '_':
-                    count = sum_adjacent_traps(board, row, col, rows, cols)
+                    count = sum_adjacent_coefficient(board, row, col, rows, cols)
                     if count > max_count:
                         max_count = count
                         max_row = row
@@ -55,7 +55,7 @@ def solve_map(board,rows,cols):
             break
         
         board[max_row][max_col] = 'T'
-        decrement_adjacent_traps(board, max_row, max_col, rows, cols) 
+        decrement_adjacent_coefficient(board, max_row, max_col, rows, cols) 
     
     for row in range(rows):
         for col in range(cols):

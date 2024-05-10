@@ -64,7 +64,7 @@ def write_output_file(path_input_file,path_output_file,choose):
         #Brute-force algorithm
         rows = len(puzzle)
         cols = len(puzzle[0])
-        check, result = solve_map(puzzle,rows,cols)
+        check, result = brute_force(puzzle,rows,cols)
     elif choose==4:
         print("backtracking")
 
