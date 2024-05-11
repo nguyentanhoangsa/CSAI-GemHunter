@@ -62,14 +62,14 @@ def read_input_file(path_input_file):
     try:
         with open(path_input_file, 'r') as f:
             lines = f.readlines()
-            board = []
+            puzzle = []
             for line in lines:
                 line = line.rstrip('\n')
                 row = []
                 for cell in line.split(', '):
                     row.append(cell)
-                board.append(row)
-            return board
+                puzzle.append(row)
+            return puzzle
     except Exception as e:
         print(f"Không thể đọc file: {str(e)}")
         return None, None, None
