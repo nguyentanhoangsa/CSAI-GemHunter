@@ -34,8 +34,8 @@ def main():
 
         # Tính thời gian chạy
         running_time = end - start
-        #print(f"-Thời gian chạy file input{i}.txt là: {running_time: .6f} giây")
-        print(f"{running_time:.6f}")
+        print(f"-Thời gian chạy file input{i}.txt là: {running_time: .6f} giây")
+        #print(f"{running_time:.6f}")
 
 
 
