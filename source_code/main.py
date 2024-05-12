@@ -5,6 +5,7 @@ import sys
 from brute_force import* 
 from solveCNF_without_library import *
 from solve_by_pysat import *
+from back_tracking import *
 
 # ---------Hàm xử lý khi chương trình bị ngắt----------
 def handler(signum, frame):
@@ -88,8 +89,8 @@ def write_output_file(path_input_file,path_output_file,choose):
         cols = len(puzzle[0])
         check, result = brute_force(puzzle,rows,cols)
     elif choose==4:
-        print("backtracking")
-
+        check, result = solve_with_backtracking(puzzle)
+        
 
     with open(path_output_file, 'w') as f:
         if check:

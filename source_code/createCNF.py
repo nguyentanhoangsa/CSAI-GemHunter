@@ -7,7 +7,10 @@ def createCNFs(puzzle):
         for j in range(len(puzzle[i])):
             if puzzle[i][j] != "_":
                 clauses += pointCNF(puzzle, i, j)
-    return clauses           
+
+    #unique_clauses = set(tuple(sublist) for sublist in clauses)
+    #clauses = [list(item) for item in unique_clauses]
+    return clauses
 
 def pointCNF(p, r, c): #puzzle, row, column are considered
     n = len(p) #number of rows
