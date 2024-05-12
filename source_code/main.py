@@ -1,21 +1,10 @@
 import os
 import time
-import signal
-import sys
 from brute_force import* 
 from solveCNF_without_library import *
 from solve_by_pysat import *
 from back_tracking import *
 
-# ---------Hàm xử lý khi chương trình bị ngắt----------
-def handler(signum, frame):
-    print("Đã quá thời gian quy định là 3 phút chạy chương trình nên chương trình tự động ngắt.")
-    sys.exit(1)
-
-signal.signal(signal.SIGALRM, handler)
-
-# Đặt hẹn giờ cho 3 phút=180s
-signal.alarm(180)  
 #---------------------------------------
 def main():
     path_input_folder = 'testcases/input'
@@ -45,7 +34,9 @@ def main():
 
         # Tính thời gian chạy
         running_time = end - start
-        print(f"-Thời gian chạy file input{i}.txt là: {running_time: 4f} giây")
+        #print(f"-Thời gian chạy file input{i}.txt là: {running_time: .6f} giây")
+        print(f"{running_time:.6f}")
+
 
 
 def num_of_file(path_folder):

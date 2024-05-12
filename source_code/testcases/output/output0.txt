@@ -1,1 +1,5 @@
-FALSE
+T 2 1 1 T
+G T G 3 2
+T T T T G
+T 4 4 4 T
+1 1 1 T 2
