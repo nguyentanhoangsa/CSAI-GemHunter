@@ -11,7 +11,7 @@ def solve_with_backtracking(puzzle_origin):
 
     if check:
         for i in range(len(variables)):
-            puzzle[(variables[i]) - 1 // m][(variables[i]) - 1 % m] = \
+            puzzle[(abs(variables[i]) - 1) // m][(abs(variables[i]) - 1) % m] = \
                                                                 "T" if assignments[i] else "G"
         for i in range(len(puzzle)):
             for j in range(m):
